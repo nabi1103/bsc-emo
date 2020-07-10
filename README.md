@@ -1,7 +1,18 @@
 # bsc-emo
 
+# Done:
+Base models
+Oversampling
+
 #TODO
-  - Simple approach (done)
-  - BERT (done)
-  - LSTM
-  - Add more functionality for preprocess (added assign_labels i guess)
+Transfer learning
+- Tales-emotion
+
+Data augmentation
+- back translation
+- sentence shuffle
+- contextual bert
+
+Update proper data for:
+- BiLSTM base
+- Pretraining emotion
