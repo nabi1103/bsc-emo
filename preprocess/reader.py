@@ -1,15 +1,18 @@
 from string import punctuation
 from random import shuffle
+
 import csv
 import sys
 import os
+
+import re
+import xml.etree.ElementTree as ET
 
 path = os.path.abspath(os.path.join(__file__, "../.."))
 sys.path.insert(1, path)
 
 tsv_path = path + '/dataset/po-emo/english.tsv'
 split_path = path + '/dataset/split/'
-
 
 class Reader:
     def __init__(self):
@@ -105,26 +108,136 @@ class Reader:
                 vector[i] = vector[i] + stanza[1][i]
         return vector
 
+    def read_gutenberg_poem(self, path):
+        try:
+            root = ET.parse(path).getroot()
+        except:
+            print(path)
+            return []
+        poem = []
 
-"""
-r = Reader()
-data = r.read_from_split('F:/[Uni]/Thesis/bsc-emo/dataset/split/split_1.tsv')
+        for lg in root.iter('{http://www.tei-c.org/ns/1.0}lg'):
+            # Look for stanza
+            if (lg.get('type') == 'stanza'):
+                stanza = []
+                prev_stanza = []
+                sroot = lg
+                # Read every line
+                for l in sroot.iter('{http://www.tei-c.org/ns/1.0}l'):
+                    # Ignore empty lines and lines with only special characters or numbers
+                    if (l.text != "" and re.search('[a-zA-Z]', str(l.text))):
+                        line = str(l.text)
+                        # Strip off leading or trailing spaces
+                        line = line.strip()
+                        # Remove redundant spaces in between
+                        line = line.replace(" ,", ",")
+                        line = line.replace(" ?", "?")
+                        line = line.replace(" .", ".")
+                        line = line.replace(" !", "!")
+                        line = line.replace(" :", ":")
+                        line = line.replace(" ;", ";")
+                        line = line.replace(" -", "-")
+                        line = line.replace(" '", "'")
+                        line = line.replace("' ", "'")
+                        line = line.replace("\u2018 ", "\u2018").replace("\x91 ", "\x91")
+                        line = line.replace(" \u2019", "\u2019").replace(" \x92", "\x92")
+                        line = line.replace("\u201C ", "\u201C").replace("\x93 ", "\x93")
+                        line = line.replace(" \u201D", "\u201D").replace(" \x94", "\x94")
 
-#count, data = r.read_from_tsv(tsv_path)
+                        line = line.replace(" [= e ]", "e")
+                        line = line.replace(" [= o ]", "o")
+                        line = line.replace(" [= a ]", "a")
+                        line = line.replace(" [= u ]", "u")
+                        line = line.replace(" [= i ]", "i")
+                        line = line.replace("=", "")
+                        line = line.replace("\u2019 d", "\u2019d")
+                        line = line.replace("\x92 d", "\x92d")
+                        line = re.sub("\{ [0-9]+ \}", "", line)
+                        line = re.sub("\[ [0-9]+ \]", "", line)
+                        line = re.sub("\( [0-9]+ \)", "", line)
+                        line = re.sub("\{ [a-zA-Z] \}", "", line)
+                        line = re.sub("\[ [a-zA-Z] \]", "", line)
+                        line = re.sub("\( [a-zA-Z] \)", "", line)
+                        line = re.sub("\{ [a-zA-Z][a-zA-Z] \}", "", line)
+                        line = re.sub("\[ [a-zA-Z][a-zA-Z] \]", "", line)
+                        line = re.sub("\( [a-zA-Z][a-zA-Z] \)", "", line)
+                        line = line.replace(" n't", "n't")
+                        line = line.replace(" n\x92t", "n\x92t")
+                        line = line.replace(" n\u2019t", "n\u2019t")
+                        line = line.replace(" 's ", "'s ")
+                        line = line.replace(" 'm ", "'m ")
+                        line = line.replace(" 've ", "'ve ")
+                        line = line.replace(" \u2018s ", "\u2018s ")
+                        line = line.replace(" \u2018m ", "\u2018m ")
+                        line = line.replace(" \u2018ve ", "\u2018ve ")
+                        line = line.replace(" \x91s ", "\x91s ")
+                        line = line.replace(" \x91m ", "\x91m ")
+                        line = line.replace(" \x91ve ", "\x91ve ")
+                        line = line.replace("( ", "").replace(" )", "")
+                        line = line.replace("{ ", "").replace(" }", "")
+                        line = line.replace("[ ", "").replace(" ]", "")
+                        line = line.replace("(", "").replace(")", "")
+                        line = line.replace("{", "").replace("}", "")
+                        line = line.replace("[", "").replace("]", "")
+                        line = re.sub(" +", " ", line)
+                        line = line.strip()
+                        if len(line) > 1:
+                            c = line[-1]
+                            while not (
+                                    c.isalpha() or c == "?" or c == "!" or c == "\u2019" or c == "\x92" or c == "\u201D" or c == "\x94"):
+                                line = line[:-1]
+                                c = line[-1]
+                            line = line.strip()
+                        else:
+                            continue
 
-data = [r.assign_label(s) for s in data]
+                        stanza.append(line.lower())
 
-print(len(data))
-print(r.get_label_count(data))
+                if (len(stanza) > 3 and len(stanza) < 11):
+                    poem.append(stanza)
+                    stanza = []
+        return poem
 
-data_0 = data[:int(len(data)*0.5)]
-data_1 = data[int(len(data)*0.5):]
+    def read_from_emmood(self, path):
+        with open(path, encoding='utf-8') as txtfile:
+            reader = csv.reader(txtfile, delimiter='\t')
+            data = [row for row in reader]
 
-d = [data_0, data_1]
+        return data
 
-for i in range(len(d)):
-    name = split_path + 'split_'+ str(i) +'.tsv'
-    with open(name, 'wt', encoding='utf-8', newline='') as out_file:
-        tsv_writer = csv.writer(out_file, delimiter='\t')
-        tsv_writer.writerows(d[i])
-"""
+    def assign_label_tales(self, line):
+        labels = ['A', 'D', 'F', 'H',
+                  'N', 'Sa', 'Su+', 'Su-']
+        vector = [0, 0, 0, 0, 0, 0, 0, 0]
+        lst_label = [l.strip() for l in line[1].split(':')]
+        for l in lst_label:
+            idx = labels.index(l)
+            vector[idx] = 1
+        return [line[0], vector]
+
+    def get_all_in_dir(self, path, filetype):
+        result = []
+        for filename in os.listdir(path):
+            if filename.endswith(filetype):
+                r = os.path.join(path, filename)
+                result.append(r)
+        return result
+
+# data = []
+# reader = Reader()
+
+# folders = ['F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/Grimms/emmood',
+#             'F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/HCAndersen/emmood',
+#             'F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/Potter/emmood']
+
+# for folder in folders:
+#     r = Reader()
+#     files = r.get_all_in_dir(folder, '.emmood')
+
+#     for f in files:
+#         for s in r.read_from_emmood(f):
+#             data.append([s[3].lower() + ' </br>', s[1]])
+
+# with open('F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/preprocessed-tales.txt', 'w', encoding='utf-8', newline='') as out_file:
+#     tsv_writer = csv.writer(out_file, delimiter='\t')
+#     tsv_writer.writerows(data)
