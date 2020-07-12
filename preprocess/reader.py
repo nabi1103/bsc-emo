@@ -223,21 +223,29 @@ class Reader:
                 result.append(r)
         return result
 
-# data = []
-# reader = Reader()
+data = []
+reader = Reader()
 
-# folders = ['F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/Grimms/emmood',
-#             'F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/HCAndersen/emmood',
-#             'F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/Potter/emmood']
+folders = ['F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/Grimms/emmood',
+            'F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/HCAndersen/emmood',
+            'F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/Potter/emmood']
 
-# for folder in folders:
-#     r = Reader()
-#     files = r.get_all_in_dir(folder, '.emmood')
+for folder in folders:
+    r = Reader()
+    files = r.get_all_in_dir(folder, '.emmood')
 
-#     for f in files:
-#         for s in r.read_from_emmood(f):
-#             data.append([s[3].lower() + ' </br>', s[1]])
+    for f in files:
+        for s in r.read_from_emmood(f):
+            data.append([s[3].lower() + ' </br>', s[1]])
 
-# with open('F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/preprocessed-tales.txt', 'w', encoding='utf-8', newline='') as out_file:
-#     tsv_writer = csv.writer(out_file, delimiter='\t')
-#     tsv_writer.writerows(data)
+shuffle(data)
+train = data[:10000]
+test = data[10000:]
+
+with open('F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/preprocessed-tales-train.txt', 'w', encoding='utf-8', newline='') as out_file:
+    tsv_writer = csv.writer(out_file, delimiter='\t')
+    tsv_writer.writerows(train)
+    
+with open('F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/preprocessed-tales-test.txt', 'w', encoding='utf-8', newline='') as out_file:
+    tsv_writer = csv.writer(out_file, delimiter='\t')
+    tsv_writer.writerows(test)

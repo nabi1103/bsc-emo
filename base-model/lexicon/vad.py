@@ -112,15 +112,23 @@ class VAD:
         f1_macro = f1_score(y_test, y_pred, average='macro')
         f1_all = f1_score(y_test, y_pred, average=None)
 
+        return f1_macro, f1_all
+
+    def save_result(self, model, test_data, result_path, file_name, split_identifier):
+        f1_macro, f1_all = self.test_model(model, test_data)
         print(f1_macro)
         print(f1_all)
 
-        if save_result == True:
-            with open(result_path + 'vad_ovs_' + str(datetime.datetime.now().strftime("%Y-%m-%d")) + '_' + '10.tsv', 'wt', encoding='utf-8', newline='') as out_file:
-                tsv_writer = csv.writer(out_file, delimiter='\t')
-                tsv_writer.writerow(['Name', 'Score'])
-                tsv_writer.writerow(['f1_macro', str(f1_macro)])
-                tsv_writer.writerow(['f1_all', str(f1_all)])
+        # Result_path: currently at root of result folder, add appropiate destination e.g: base, transfer learning, etc
+        # File name e.g 'bert_multilabel_ovs'
+        # Split identifier e.g '10.tsv'
+
+        with open(result_path + file_name + '_' + str(datetime.datetime.now().strftime("%Y-%m-%d")) + '_' + split_identifier + '.tsv', 'wt', encoding='utf-8', newline='') as out_file:
+        tsv_writer = csv.writer(out_file, delimiter = '\t')
+        tsv_writer.writerow(['Name', 'Score'])
+        tsv_writer.writerow(['f1_macro', str(f1_macro)])
+        tsv_writer.writerow(['f1_all', str(f1_all)])
+
         return
 
 
