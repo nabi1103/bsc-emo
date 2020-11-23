@@ -7,7 +7,6 @@ from skmultilearn.problem_transform import BinaryRelevance
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import f1_score
 
-
 import sys
 import os
 
@@ -17,23 +16,16 @@ prep_path = os.path.join(root_path, 'preprocess')
 sys.path.append(prep_path)
 
 lex_path = os.path.join(root_path, 'dataset/vad-lexicon')
-split_path = os.path.join(root_path, 'dataset/split')
+split_path = os.path.join(root_path, 'dataset/split/')
 
-result_path = os.path.join(root_path, 'result/base-model/')
+result_path = os.path.join(root_path, 'result/')
 
 from reader import Reader
-from oversample import Oversampler
 
 r = Reader()
 
-split_0 = r.read_from_split(split_path + '/split_0.tsv')
-split_1 = r.read_from_split(split_path + '/split_1.tsv')
-
-ovs = Oversampler(split_path + '/split_0.tsv')
-split_0_ovs = ovs.oversampling()
-
-ovs = Oversampler(split_path + '/split_1.tsv')
-split_1_ovs = ovs.oversampling()
+split_0 = r.read_from_split(split_path + 'split_0.tsv')
+split_1 = r.read_from_split(split_path + 'split_1.tsv')
 
 lex = r.read_from_txt(lex_path + '/NRC-VAD-Lexicon.txt')[1:]
 
@@ -84,7 +76,7 @@ class VAD:
         return ([v/count, a/count, d/count, max_v ,max_a, max_d, min_v, min_a, min_d], r.assign_label(stanza)[1])
 
     def train_model(self, train):
-        data = [self.get_value(s, True) for s in train]
+        data = [self.get_value(s, False) for s in train]
 
         X_train = np.array([d[0] for d in data])
         y_train = np.array([d[1] for d in data])
@@ -96,7 +88,7 @@ class VAD:
 
         return model
 
-    def test_model(self, model, test_data, save_result):
+    def test_model(self, model, test_data):
         if model == None:
             print('No model found')
             return
@@ -114,26 +106,16 @@ class VAD:
 
         return f1_macro, f1_all
 
-    def save_result(self, model, test_data, result_path, file_name, split_identifier):
-        f1_macro, f1_all = self.test_model(model, test_data)
-        print(f1_macro)
-        print(f1_all)
+# # Testing code
+# vad = VAD()
 
-        # Result_path: currently at root of result folder, add appropiate destination e.g: base, transfer learning, etc
-        # File name e.g 'bert_multilabel_ovs'
-        # Split identifier e.g '10.tsv'
+# train = split_0
+# test = split_1
 
-        with open(result_path + file_name + '_' + str(datetime.datetime.now().strftime("%Y-%m-%d")) + '_' + split_identifier + '.tsv', 'wt', encoding='utf-8', newline='') as out_file:
-        tsv_writer = csv.writer(out_file, delimiter = '\t')
-        tsv_writer.writerow(['Name', 'Score'])
-        tsv_writer.writerow(['f1_macro', str(f1_macro)])
-        tsv_writer.writerow(['f1_all', str(f1_all)])
+# model = vad.train_model(train)
 
-        return
+# test_data = [vad.get_value(s, False) for s in test]
+# X_test = np.array([s[0] for s in test_data])
 
-
-# Testing code
-vad = VAD()
-
-model = vad.train_model(split_1_ovs)
-vad.test_model(model, split_0, True)
+# print(model.predict_proba(X_test).todense())
+# # vad.save_result(model, split_0, save_path, 'vad_btl', '10')

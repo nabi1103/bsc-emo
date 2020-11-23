@@ -1,5 +1,6 @@
 from sklearn.metrics import f1_score
-from simpletransformers.classification import MultiLabelClassificationModel
+# from simpletransformers.classification import MultiLabelClassificationModel
+
 import sys
 import os
 
@@ -14,34 +15,49 @@ root_path = os.path.dirname(os.path.dirname(
 prep_path = os.path.join(root_path, 'preprocess')
 sys.path.append(prep_path)
 
-lex_path = os.path.join(root_path, 'dataset/vad-lexicon')
 split_path = os.path.join(root_path, 'dataset/split')
 
 result_path = os.path.join(root_path, 'result/base-model/')
 
 from reader import Reader
-r = Reader()
-split_0 = r.read_from_split(split_path + '/split_0.tsv')
-split_1 = r.read_from_split(split_path + '/split_1.tsv')
 
+def f1_evaluate(true, pred):
+    for p in pred:
+        for i in range(len(p)):
+            if p[i] >= 0.5:
+                p[i] = 1
+            else:
+                p[i] = 0
+
+    score = f1_score(true, pred, average = 'macro')
+    label = f1_score(true, pred, average = None)
+    print(score)
+    print(label)
+
+    return score
 
 class BERTMultilabel:
     def __init__(self):
         self.dummy = None
         self.reader = Reader()
 
-    def train_model(self, num_epochs, training_data):
+    def train_model(self, training_data, training_args, base_model_path, eval_data):
         model = MultiLabelClassificationModel(
             "bert",
-            "bert-base-multilingual-cased",
+            base_model_path,
             num_labels=8,
-            args={"reprocess_input_data": True, "overwrite_output_dir": True,
-                  "num_train_epochs": num_epochs, 'fp16': False},
+            args = training_args,
         )
 
         temp = [self.reader.assign_label(s) for s in training_data]
 
-        model.train_model(pd.DataFrame(temp))
+        test_data = [self.reader.assign_label(s) for s in test_data]
+        test_text = [s[0] for s in test_data]
+        test_label = [s[1] for s in test_data]
+
+        eval_df = pd.DataFrame(eval_data, columns=['text', 'labels'])
+
+        model.train_model(pd.DataFrame(temp, columns=['text', 'labels']), eval_df = eval_df, f1_macro = f1_evaluate)
 
         return model
 
@@ -67,20 +83,36 @@ class BERTMultilabel:
         print(f1_all)
 
         return f1_macro, f1_all
-    
-    def save_result(self, model, test_data, result_path, file_name, split_identifier):
-        f1_macro, f1_all = self.test_model(model, test_data)
-        print(f1_macro)
-        print(f1_all)
 
-        # Result_path: currently at root of result folder, add appropiate destination e.g: base, transfer learning, etc
-        # File name e.g 'bert_multilabel_ovs'
-        # Split identifier e.g '10.tsv'
 
-        with open(result_path + file_name + '_' + str(datetime.datetime.now().strftime("%Y-%m-%d")) + '_' + split_identifier + '.tsv', 'wt', encoding='utf-8', newline='') as out_file:
-        tsv_writer = csv.writer(out_file, delimiter = '\t')
-        tsv_writer.writerow(['Name', 'Score'])
-        tsv_writer.writerow(['f1_macro', str(f1_macro)])
-        tsv_writer.writerow(['f1_all', str(f1_all)])
+## Training args
+# args = {"reprocess_input_data": True, 
+#     "overwrite_output_dir": True, 
+#     "num_train_epochs": 30, 
+#     'fp16': False,
+#     "use_early_stopping": True,
+#     'learning_rate': 4e-5,
+#     'evaluate_during_training' : True,
+#     'early_stopping_metric' : 'f1_macro',
+#     'early_stopping_metric_minimize': False,
+#     'save_model_every_epoch' : False, 
+#     'train_batch_size' : 8,
+# }
 
-        return
+## Read the splits
+
+# r = Reader()
+
+# split_0 = r.read_from_split(split_path + '/split_0.tsv')
+# split_1 = r.read_from_split(split_path + '/split_1.tsv')
+
+# base_model_path = 'bert-large-uncased'
+
+# bm = BERTMultilabel()
+
+# # Train 01 base model
+# train = split_0
+# test = split_1
+
+# model = bm.train_model(train, args, base_model_path, test)
+

@@ -7,11 +7,13 @@ import os
 
 import re
 import xml.etree.ElementTree as ET
+import json
 
 path = os.path.abspath(os.path.join(__file__, "../.."))
 sys.path.insert(1, path)
 
 tsv_path = path + '/dataset/po-emo/english.tsv'
+tsv_path_de = path + '/dataset/po-emo/emotion.german.tsv'
 split_path = path + '/dataset/split/'
 
 class Reader:
@@ -50,11 +52,43 @@ class Reader:
 
         return [lines, labels_text[2:]]
 
+    def get_stanza_w_info_de(self, stanza):
+        text = [" ".join(line[0].translate(str.maketrans(
+            punctuation, ' '*len(punctuation))).split()) for line in stanza]
+        lines = ''
+
+        for line in text:
+            lines = lines + ' </br> ' + line
+
+        lines = lines[7:]
+
+        label_1 = []
+        label_2 = []
+
+        label_1 = [line[1].split('---') for line in stanza]
+        label_1 = [item.strip().strip('\t').lower()
+                   for sublist in label_1 for item in sublist]
+
+        label_2 = [line[2].split('---') for line in stanza if len(line) > 2]
+        label_2 = [item.strip().strip('\t').lower()
+                   for sublist in label_2 for item in sublist]
+
+        labels = list(set(label_1 + label_2))
+        if 'nostalgia' in labels:
+            labels.remove('nostalgia')
+
+        labels = [label.replace(' ', '') for label in labels]
+        labels_text = ''
+        for l in labels:
+            labels_text = labels_text + ", " + l
+
+        return [lines, labels_text[2:]]
+
     def read_from_tsv(self, path):
         data = []
         count = 1
 
-        with open(path, encoding='utf-8') as tsvfile:
+        with open(path, encoding='utf-8', mode='r') as tsvfile:
             reader = csv.reader(tsvfile, delimiter='\t')
             raw = [row for row in reader]
             stanza = []
@@ -69,6 +103,29 @@ class Reader:
                     stanza = []
 
         data = [self.get_stanza_w_info(s) for s in data if s != []]
+        # shuffle(data)
+
+        return count, data
+
+    def read_from_tsv_de(self, path):
+        data = []
+        count = 1
+
+        with open(path, encoding='utf-8',mode='r') as tsvfile:
+            reader = csv.reader(tsvfile, delimiter='\t')
+            raw = [row for row in reader]
+            stanza = []
+
+            for i in range(len(raw)):
+                if len(raw[i]) > 1 and raw[i][1] == '':
+                    count = count + 1
+                if len(raw[i]) > 1 and raw[i][1] != '':
+                    stanza.append(raw[i])
+                if raw[i] == []:
+                    data.append(stanza)
+                    stanza = []
+
+        data = [self.get_stanza_w_info_de(s) for s in data if s != []]
         # shuffle(data)
 
         return count, data
@@ -223,29 +280,47 @@ class Reader:
                 result.append(r)
         return result
 
-data = []
-reader = Reader()
+# r = Reader()
 
-folders = ['F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/Grimms/emmood',
-            'F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/HCAndersen/emmood',
-            'F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/Potter/emmood']
+# data = r.read_from_txt('F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/preprocessed-tales.txt')
+# data = [r.assign_label_tales(l) for l in data]
+# print(r.get_label_count(data))
 
-for folder in folders:
-    r = Reader()
-    files = r.get_all_in_dir(folder, '.emmood')
 
-    for f in files:
-        for s in r.read_from_emmood(f):
-            data.append([s[3].lower() + ' </br>', s[1]])
+# poem_1500 = r.get_all_in_dir('F:/[Uni]/Thesis/[Misc]/Code/english-gutenberg-poetry/1500-1600_Poetry', '.xml')
+# poem_1600 = r.get_all_in_dir('F:/[Uni]/Thesis/[Misc]/Code/english-gutenberg-poetry/1600-1700_Poetry', '.xml')
+# poem_1700 = r.get_all_in_dir('F:/[Uni]/Thesis/[Misc]/Code/english-gutenberg-poetry/1700-1800_Poetry', '.xml')
+# poem_1800 = r.get_all_in_dir('F:/[Uni]/Thesis/[Misc]/Code/english-gutenberg-poetry/1800-1850_Poetry', '.xml') + r.get_all_in_dir('F:/[Uni]/Thesis/[Misc]/Code/english-gutenberg-poetry/1850-1875_Poetry', '.xml') + r.get_all_in_dir('F:/[Uni]/Thesis/[Misc]/Code/english-gutenberg-poetry/1875-1900_Poetry', '.xml')
+# poem_1900 = r.get_all_in_dir('F:/[Uni]/Thesis/[Misc]/Code/english-gutenberg-poetry/1900-2000_Poetry', '.xml')
 
-shuffle(data)
-train = data[:10000]
-test = data[10000:]
+# folders = [poem_1500, poem_1600, poem_1700, poem_1800, poem_1900]
+# names = ['poem_1500', 'poem_1600', 'poem_1700', 'poem_1800', 'poem_1900']
+# poems = [[], [], [], [], []]
 
-with open('F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/preprocessed-tales-train.txt', 'w', encoding='utf-8', newline='') as out_file:
-    tsv_writer = csv.writer(out_file, delimiter='\t')
-    tsv_writer.writerows(train)
-    
-with open('F:/[Uni]/Thesis/[Misc]/Code/tales-emotion/preprocessed-tales-test.txt', 'w', encoding='utf-8', newline='') as out_file:
-    tsv_writer = csv.writer(out_file, delimiter='\t')
-    tsv_writer.writerows(test)
+# for i in range(len(folders)):
+#     for f in folders[i]:
+#         try:
+#             for s in r.read_gutenberg_poem(f):
+#                 poems[i].append(s)
+#         except:
+#             print(f)
+#             continue
+#     print(len(poems[i]))
+#     shuffle(poems[i])
+
+    # with open(names[i] + '.json', 'w') as fp:
+    #     try:
+    #         json.dump(poems[i][:5000], fp)
+    #     except expression as identifier:
+    #         json.dump(poems[i], fp)
+        
+# r = Reader()
+
+# ovs_0 = r.read_from_split(split_path + 'split_0_ovs.tsv')
+# ovs_1 = r.read_from_split(split_path + 'split_1_ovs.tsv')
+
+# ovs_0 = [r.assign_label(s) for s in ovs_0]
+# ovs_1 = [r.assign_label(s) for s in ovs_1]
+
+# print(r.assign_label(ovs_0))
+# print(r.assign_label(ovs_1))
