@@ -4,9 +4,9 @@ This repository contains the implementations of base models and experiments desc
 
 # Setup virtual environment
 
+Setup virtual environment and install requirements:
 ``` 
 virtualenv --system-site-packages -p python3 venv
 source venv/bin/activate
 venv/bin/pip3 install -r requirements.txt
 ```
-
