@@ -13,6 +13,7 @@ venv/bin/pip3 install -r requirements.txt
 
 # Running the codes
 
+<<<<<<< HEAD
 In this repository, we provide the following codes:
 
 *
@@ -20,3 +21,6 @@ In this repository, we provide the following codes:
 
 
 We train new models for each experiment in the thesis, most of which can be found and downloaded from [here](https://drive.google.com/drive/folders/1UIk5FwmX4iY8DT049m1DzgKDm4vynoWN?usp=sharing). 
+=======
+We train new models for each experiment in the thesis, most of which can be found [here](https://drive.google.com/drive/folders/1UIk5FwmX4iY8DT049m1DzgKDm4vynoWN?usp=sharing).
+>>>>>>> 9ffec90cb36d4936994467dfeef6c94b995fe1dc
