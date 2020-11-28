@@ -10,3 +10,7 @@ virtualenv --system-site-packages -p python3 venv
 source venv/bin/activate
 venv/bin/pip3 install -r requirements.txt
 ```
+
+# Running the codes
+
+We train new models for each experiment in the thesis, most of which can be found [here](https://drive.google.com/drive/folders/1UIk5FwmX4iY8DT049m1DzgKDm4vynoWN?usp=sharing).
