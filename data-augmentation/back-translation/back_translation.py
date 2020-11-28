@@ -108,9 +108,9 @@ class BackTranslator:
 #     tsv_writer.writerows(result)
 
 
-## Train classification models
-## Training args
-# args = {"reprocess_input_data": True, 
+# Train classification models
+# Training args
+#args = {"reprocess_input_data": True, 
 #     "overwrite_output_dir": True, 
 #     "num_train_epochs": 30, 
 #     'fp16': False,
@@ -124,22 +124,22 @@ class BackTranslator:
 #     'manual_seed' : 1
 # }
 
-## Read the splits
+# Read the splits
 
-# r = Reader()
+#r = Reader()
+#
+#split_0_btl_fix = r.read_from_split(curr_path + '/split_0_btl_fix.tsv')
+#split_1_btl_fix = r.read_from_split(curr_path + '/split_1_btl_fix.tsv')
+#
+#split_0 = r.read_from_split(split_path + '/split_0.tsv')
+#split_1 = r.read_from_split(split_path + '/split_1.tsv')
+#
+#bm = BERTMultilabel()
+#
+#base_model_path = 'bert-large-uncased'
 
-# split_0_btl_fix = r.read_from_split(curr_path + '/split_0_btl_fix.tsv')
-# split_1_btl_fix = r.read_from_split(curr_path + '/split_1_btl_fix.tsv')
-
-# split_0 = r.read_from_split(split_path + '/split_0.tsv')
-# split_1 = r.read_from_split(split_path + '/split_1.tsv')
-
-# bm = BERTMultilabel()
-
-# base_model_path = 'bert-large-uncased'
-
-## Train 01 model
-# train = split_0_btl_fix
-# test = split_1
-
-# model = bm.train_model(train, args, base_model_path, test)
+# Train 01 model
+#train = split_0_btl_fix
+#test = split_1
+#
+#model = bm.train_model(train, args, base_model_path, test)

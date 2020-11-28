@@ -32,9 +32,9 @@ finetune_args = {
     'train_batch_size' : 16,
 }
 
-model = LanguageModelingModel('bert', 'bert-large-uncased', args = finetune_args)
+model = LanguageModelingModel('bert', 'bert-large-uncased', args = finetune_args, use_cuda = False)
 
-model.train_model(curr_path + "raw-poetry-train.txt", eval_file = curr_path +'raw-poetry-test.txt')
+model.train_model(curr_path + "/raw-poetry-train.txt", eval_file = curr_path + '/raw-poetry-test.txt')
 
 ## Train an emotion classifier with the fine-tuned model from above
 

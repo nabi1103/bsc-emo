@@ -64,7 +64,7 @@ def f1_evaluate(true, pred):
 # base_model_path = 'bert-base-multilingual-cased'
 
 ## Train 01 model
-# train = split_0_btl_fix
+# train = split_0
 # test = split_1
 
 # model = bm.train_model(train, args, base_model_path, test)

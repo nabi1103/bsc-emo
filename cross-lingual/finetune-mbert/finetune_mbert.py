@@ -33,7 +33,7 @@ finetune_args = {
 
 model = LanguageModelingModel('bert', 'bert-base-multilingual-cased', args = finetune_args)
 
-model.train_model(curr_path + "raw-poetry-train.txt", eval_file=curr_path +'raw-poetry-test.txt')
+model.train_model(curr_path + "/raw-poetry-train.txt", eval_file=curr_path + '/raw-poetry-test.txt')
 
 # ## Train an emotion classifier with the fine-tuned model from above
 

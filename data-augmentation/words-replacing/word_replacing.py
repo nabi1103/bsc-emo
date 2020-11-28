@@ -16,9 +16,9 @@ curr_path = os.path.dirname(os.path.abspath(__file__))
 from reader import Reader
 from bert_multilabel import BERTMultilabel
 
-# import gensim
-# import gensim.downloader as api
-# model = api.load("word2vec-google-news-300")
+import gensim
+import gensim.downloader as api
+model = api.load("word2vec-google-news-300")
 import csv
 import pandas as pd
 

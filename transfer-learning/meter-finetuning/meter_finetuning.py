@@ -56,11 +56,12 @@ model = MultiLabelClassificationModel(
         'save_model_every_epoch' : False, 
         'train_batch_size' : 16,
         },
+    use_cuda = False
 )
 
 temp = [mp.assign_label_meter(s) for s in train_meter]
 
-model.train_model(pd.DataFrame(temp))
+model.train_model(pd.DataFrame(temp, columns=['text', 'labels']))
 
 ## Train an emotion classifier with the fine-tuned model from above
 

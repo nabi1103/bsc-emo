@@ -17,7 +17,7 @@ curr_path = os.path.dirname(os.path.abspath(__file__))
 
 from bert_multilabel import BERTMultilabel
 from reader import Reader
-#from simpletransformers.classification import MultiLabelClassificationModel
+from simpletransformers.classification import MultiLabelClassificationModel
 import pandas as pd
 
 # Train a fairy tales emotion classifier 

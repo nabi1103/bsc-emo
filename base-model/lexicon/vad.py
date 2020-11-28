@@ -106,7 +106,7 @@ class VAD:
 
         return f1_macro, f1_all
 
-# # Testing code
+# Testing code
 # vad = VAD()
 
 # train = split_0
@@ -117,5 +117,4 @@ class VAD:
 # test_data = [vad.get_value(s, False) for s in test]
 # X_test = np.array([s[0] for s in test_data])
 
-# print(model.predict_proba(X_test).todense())
-# # vad.save_result(model, split_0, save_path, 'vad_btl', '10')
+# print(vad.test_model(model, split_1))
