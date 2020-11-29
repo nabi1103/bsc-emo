@@ -35,36 +35,36 @@ def f1_evaluate(true, pred):
     
     return score
 
-## Train classification models
-## Training args
-# args = {"reprocess_input_data": True, 
-#     "overwrite_output_dir": True, 
-#     "num_train_epochs": 30, 
-#     'fp16': False,
-#     "use_early_stopping": True,
-#     'learning_rate': 4e-5,
-#     'evaluate_during_training' : True,
-#     'early_stopping_metric' : 'f1_macro',
-#     'early_stopping_metric_minimize': False,
-#     'save_model_every_epoch' : False, 
-#     'train_batch_size' : 8,
-# }
+# Train classification models
+# Training args
+args = {"reprocess_input_data": True, 
+    "overwrite_output_dir": True, 
+    "num_train_epochs": 30, 
+    'fp16': False,
+    "use_early_stopping": True,
+    'learning_rate': 4e-5,
+    'evaluate_during_training' : True,
+    'early_stopping_metric' : 'f1_macro',
+    'early_stopping_metric_minimize': False,
+    'save_model_every_epoch' : False, 
+    'train_batch_size' : 8,
+}
 
-## Read the splits
+# Read the splits
 
-# r = Reader()
+r = Reader()
 
-# split_0 = r.read_from_split(split_path + '/split_0.tsv')
-# split_1 = r.read_from_split(split_path + '/split_1.tsv')
+split_0 = r.read_from_split(split_path + '/split_0.tsv')
+split_1 = r.read_from_split(split_path + '/split_1.tsv')
 
-# de = r.read_from_tsv_de(de_path + '/emotion.german.tsv')
+de = r.read_from_tsv_de(de_path + '/emotion.german.tsv')
 
-# bm = BERTMultilabel()
+bm = BERTMultilabel()
 
-# base_model_path = 'bert-base-multilingual-cased'
+base_model_path = 'bert-base-multilingual-cased'
 
-## Train 01 model
-# train = split_0
-# test = split_1
+# Train 01 model
+train = split_0
+test = split_1
 
-# model = bm.train_model(train, args, base_model_path, test)
+model = bm.train_model(train, args, base_model_path, test)

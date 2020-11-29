@@ -20,7 +20,7 @@ from reader import Reader
 from simpletransformers.classification import MultiLabelClassificationModel
 import pandas as pd
 
-# Train a fairy tales emotion classifier 
+# Train a German poetry emotion classifier (1st PART)
 
 def f1_evaluate(true, pred):
     for p in pred:
@@ -75,6 +75,8 @@ model = bm.train_model(training_data = train, training_args = args, base_model_p
 #     'early_stopping_metric_minimize': False,
 #     'save_model_every_epoch' : False, 
 #     'train_batch_size' : 1,
+#     'output_dir': "classification/",
+#     "best_model_dir": "classification/best_model/"
 # }
 
 # split_0 = r.read_from_split(split_path + '/split_0.tsv')

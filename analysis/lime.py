@@ -183,6 +183,7 @@ def merge_dict(d1: dict, d2: dict):
 
 class_names = ['suspense', 'awe/sublime', 'sadness', 'annoyance', 'uneasiness', 'beauty/joy', 'vitality', 'humor']
 
+## MAKING LIME EXPLANATIONS
 # model_path =  # Add model path here for LIME explanation
 
 # model = MultiLabelClassificationModel(
@@ -215,26 +216,26 @@ class_names = ['suspense', 'awe/sublime', 'sadness', 'annoyance', 'uneasiness', 
 #     json.dump(exps, fp)
 
 
-# json_path = curr_path + '/json'
-# folder = r.get_all_in_dir(json_path, '.json')
+json_path = curr_path + '/json'
+folder = r.get_all_in_dir(json_path, '.json')
 
-# pred_01 = [f for f in folder if '01' in f]
-# pred_01.sort()
-# pred_01 = [read_json(f) for f in pred_01]
+pred_01 = [f for f in folder if '01' in f]
+pred_01.sort()
+pred_01 = [read_json(f) for f in pred_01]
 
-# pred_10 = [f for f in folder if '10' in f]
-# pred_10.sort()
-# pred_10 = [read_json(f) for f in pred_10]
+pred_10 = [f for f in folder if '10' in f]
+pred_10.sort()
+pred_10 = [read_json(f) for f in pred_10]
 
-# top_feature_01 = compile_feature(pred_01)
-# top_feature_10 = compile_feature(pred_10)
+top_feature_01 = compile_feature(pred_01)
+top_feature_10 = compile_feature(pred_10)
 
-# features = []
+features = []
 
-# for i in range(len(top_feature_01)):
-#     temp = merge_dict(top_feature_01[i], top_feature_10[i])
-#     temp = {k: v for k, v in sorted(temp.items(), key=lambda item: item[1], reverse = True)}
-#     features.append(temp)
+for i in range(len(top_feature_01)):
+    temp = merge_dict(top_feature_01[i], top_feature_10[i])
+    temp = {k: v for k, v in sorted(temp.items(), key=lambda item: item[1], reverse = True)}
+    features.append(temp)
 
-# for i in range(len(features)):
-#     visualize_feature(features[i], class_names[i])
+for i in range(len(features)):
+    visualize_feature(features[i], class_names[i])

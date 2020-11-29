@@ -20,6 +20,8 @@ from simpletransformers.language_modeling import LanguageModelingModel
 from reader import Reader
 import pandas as pd
 
+# Finetune m-BERT model (1ST PART)
+
 finetune_args = {
     "reprocess_input_data": True,
     "overwrite_output_dir": True,
@@ -35,7 +37,7 @@ model = LanguageModelingModel('bert', 'bert-base-multilingual-cased', args = fin
 
 model.train_model(curr_path + "/raw-poetry-train.txt", eval_file=curr_path + '/raw-poetry-test.txt')
 
-# ## Train an emotion classifier with the fine-tuned model from above
+# ## Train an emotion classifier with the fine-tuned model from above (2ND PART)
 
 # def f1_evaluate(true, pred):
 #     for p in pred:
@@ -63,6 +65,8 @@ model.train_model(curr_path + "/raw-poetry-train.txt", eval_file=curr_path + '/r
 #     'early_stopping_metric_minimize': False,
 #     'save_model_every_epoch' : False, 
 #     'train_batch_size' : 1,
+#     'output_dir': "classification/",
+#     "best_model_dir": "classification/best_model/"
 # }
 
 # r = Reader()

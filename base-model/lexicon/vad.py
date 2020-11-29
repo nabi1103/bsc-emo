@@ -106,7 +106,7 @@ class VAD:
 
         return f1_macro, f1_all
 
-# Testing code
+## Training code
 # vad = VAD()
 
 # train = split_0

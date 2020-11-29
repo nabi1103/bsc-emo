@@ -48,7 +48,7 @@ class BERTMultilabel:
             "bert",
             base_model_path,
             num_labels=8,
-            use_cuda = False,
+            use_cuda = False, # Change to True if CUDA is available (recommended)
             args = training_args,
         )
 
@@ -88,34 +88,33 @@ class BERTMultilabel:
         return f1_macro, f1_all
 
 
-# Training args
-#args = {"reprocess_input_data": True,
-#"overwrite_output_dir": True, 
-#"num_train_epochs": 30, 
-#'fp16': False,
-#"use_early_stopping": True,
-#'learning_rate': 4e-5,
-#'evaluate_during_training' : True,
-#'early_stopping_metric' : 'f1_macro',
-#'early_stopping_metric_minimize': False,
-#'save_model_every_epoch' : False, 
-#'train_batch_size' : 8
-#}
-#
-# Read the splits
+# # Training args
+# args = {"reprocess_input_data": True,
+# "overwrite_output_dir": True, 
+# "num_train_epochs": 30, 
+# 'fp16': False,
+# "use_early_stopping": True,
+# 'learning_rate': 4e-5,
+# 'evaluate_during_training' : True,
+# 'early_stopping_metric' : 'f1_macro',
+# 'early_stopping_metric_minimize': False,
+# 'save_model_every_epoch' : False, 
+# 'train_batch_size' : 8
+# }
 
-#r = Reader()
-#
-#split_0 = r.read_from_split(split_path + '/split_0.tsv')
-#split_1 = r.read_from_split(split_path + '/split_1.tsv')
-#
-#base_model_path = 'bert-large-uncased'
-#
-#bm = BERTMultilabel()
+# # Read the splits
 
-# Train 01 base model
-#train = split_0
-#test = split_1
-#
-#model = bm.train_model(train, args, base_model_path, test)
+# r = Reader()
 
+# split_0 = r.read_from_split(split_path + '/split_0.tsv')
+# split_1 = r.read_from_split(split_path + '/split_1.tsv')
+
+# base_model_path = 'bert-large-uncased'
+
+# bm = BERTMultilabel()
+
+# # Train 01 base model
+# train = split_0
+# test = split_1
+
+# model = bm.train_model(train, args, base_model_path, test)

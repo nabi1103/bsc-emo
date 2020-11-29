@@ -335,7 +335,7 @@ prediction_folder_10 = [read_csv(f, 'int') for f in get_all_in_dir(predictions_p
 raw_folder_01 = [read_csv(f, 'float') for f in get_all_in_dir(raw_path_01, 'csv')]
 raw_folder_10 = [read_csv(f, 'float') for f in get_all_in_dir(raw_path_10, 'csv')]
 
-# # Pairwise ensemble
+# # 2-ENSEMBLE
 
 # labels = [f[1] for f in prediction_folder_01]
 # col_labels = [f.replace('_', '\n') for f in labels]
@@ -386,7 +386,7 @@ raw_folder_10 = [read_csv(f, 'float') for f in get_all_in_dir(raw_path_10, 'csv'
 # print(r)
 # print(best)
 
-# # Ensemble of triple of models
+# # 3-ENSEMBLE
 
 # triple_0 = get_triplewise_value(raw_folder_01, 'avg', case_1)
 # triple_0.sort(key = lambda x: x[1])
@@ -423,7 +423,7 @@ raw_folder_10 = [read_csv(f, 'float') for f in get_all_in_dir(raw_path_10, 'csv'
 #     print(str(r[0]) + ' & ' + line + '\\\\')
 #     print('\\hline')
 
-# # All ensemble
+# # ALL ENSEMBLE
 
 # mode = ['and', 'or', 'majority', '2', '3', '4']
 # base_01 = 0.38

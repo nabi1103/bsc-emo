@@ -19,7 +19,7 @@ from reader import Reader
 from simpletransformers.classification import MultiLabelClassificationModel
 import pandas as pd
 
-# Train a fairy tales emotion classifier 
+# Train a fairy tales emotion classifier (1ST PART)
 
 def f1_evaluate(true, pred):
     for p in pred:
@@ -60,7 +60,7 @@ temp = [r.assign_label_tales(s) for s in train_tales]
 
 model.train_model(pd.DataFrame(temp, columns=['text', 'labels']))
 
-## Train an emotion classifier with the fine-tuned model from above
+## Train an emotion classifier with the fine-tuned model from above (2ND PART)
 
 # args = {"reprocess_input_data": True, 
 #     "overwrite_output_dir": True, 
@@ -73,6 +73,8 @@ model.train_model(pd.DataFrame(temp, columns=['text', 'labels']))
 #     'early_stopping_metric_minimize': False,
 #     'save_model_every_epoch' : False, 
 #     'train_batch_size' : 1,
+#     'output_dir': "classification/",
+#     "best_model_dir": "classification/best_model/"
 # }
 
 # r = Reader()
