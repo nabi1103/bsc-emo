@@ -43,7 +43,9 @@ To train the model, look into `vad.py` and uncomment the codes from line 109 to 
 python vad.py
 ```
 
-### BiLSTM-CNN-CRF model (refer to https://github.com/UKPLab/emnlp2017-bilstm-cnn-crf for the original implementation)
+### BiLSTM-CNN-CRF model 
+
+This implementation is based on https://github.com/UKPLab/emnlp2017-bilstm-cnn-crf
 
 Install additional requirements
 
@@ -70,6 +72,8 @@ python train_emo.py
 
 ### BERT-based implementation
 
+This implementation is based on https://github.com/ThilinaRajapakse/simpletransformers
+
 Change the working directory
 
 ```
@@ -87,7 +91,7 @@ python bert_multilabel.py
 
 After training, make sure to comment out the code from line 91 to 120 again since we import this class again to train models in other experiments.
 
-## transfer-learning
+## Transfer Learning Experiments
 
 ### Poetry fine-tuning
 
@@ -200,9 +204,9 @@ After the first part is completed, comment out the first part (line 25 to 64), u
 python meter_finetuning.py
 ```
 
-## data-augmentation
+## Data Augmentation Experiments
 
-### back-translation
+### Back-translation
 
 This was used in the Back-translation experiment (Section 5.2.2)
 
@@ -218,7 +222,7 @@ The augmented data is already available in the folder. Train the model by runnin
 python back_translation.py
 ```
 
-### oversample
+### Oversampling
 
 This was used in the Oversampling experiment (Section 5.2.1)
 
@@ -234,7 +238,7 @@ The augmented data is already available in the folder. Train the model by runnin
 python oversample.py
 ```
 
-### stanza-shuffling
+### Stanza Shuffling
 
 This was used in the Stanza Shuffling experiment (Section 5.2.4)
 
@@ -250,7 +254,7 @@ The augmented data is already available in the folder. Train the model by runnin
 python stanza_shuffling.py
 ```
 
-### word-replacing
+### Words Replacement
 
 This was used in the Words Replacement experiment (Section 5.2.3)
 
@@ -266,9 +270,9 @@ The augmented data is already available in the folder. Train the model by runnin
 python word_replacing.py
 ```
 
-## cross-lingual
+## Cross-lingual Experiments
 
-### baseline-mbert
+### Baseline multilingual BERT (m-BERT) model
 
 This was used to train the baseline m-BERT model (Section 5.3.1)
 
@@ -284,7 +288,7 @@ Train the model
 python baseline_mbert.py
 ```
 
-### finetune-mbert
+### Fine-tune m-BERT with German poetry
 
 This was used in the m-BERT Fine-tuning experiment (Section 5.3.4)
 
@@ -321,7 +325,7 @@ After the first part is completed, comment out the first part (line 25 to 38), u
 python finetune_mbert.py
 ```
 
-### finetune-mbert-cls
+### Intermediate task training with German poetry emotion classification
 
 This was used in the m-BERT intermediate task training experiment (Section 5.3.5)
 
