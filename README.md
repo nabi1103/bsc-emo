@@ -308,7 +308,7 @@ The first part can be executed by running the code
 python finetune_mbert.py
 ```
 
-After the training has completed, the resulting model can be found in `outputs` under the same working directory. To ensure reproducibility, we provide our poetry fine-tuned model, which should be downloaded [here](https://drive.google.com/drive/folders/103HdxRb7LH-tHv27w4EpvlFvO6sxeIZd?usp=sharing) and extracted to the `outputs` folder. If done correctly, the folder structure should look like this
+After the training has completed, the resulting model can be found in `outputs` under the same working directory. To ensure reproducibility, we provide our German fine-tuned model, which should be downloaded [here](https://drive.google.com/drive/folders/103HdxRb7LH-tHv27w4EpvlFvO6sxeIZd?usp=sharing) and extracted to the `outputs` folder. If done correctly, the folder structure should look like this
 
 ```
 bsc-emo/cross-lingual/finetune-mbert/outputs/
@@ -345,7 +345,7 @@ The first part can be executed by running the code
 python finetune_mbert_cls.py
 ```
 
-After the training has completed, the resulting model can be found in `outputs` under the same working directory. To ensure reproducibility, we provide our poetry fine-tuned model, which should be downloaded [here](https://drive.google.com/drive/folders/1fho1TGenK946yJjPppBtTwDtIt8FYA9h?usp=sharing) and extracted to the `outputs` folder. If done correctly, the folder structure should look like this
+After the training has completed, the resulting model can be found in `outputs` under the same working directory. To ensure reproducibility, we provide our German poetry emotion classification fine-tuned model, which should be downloaded [here](https://drive.google.com/drive/folders/1fho1TGenK946yJjPppBtTwDtIt8FYA9h?usp=sharing) and extracted to the `outputs` folder. If done correctly, the folder structure should look like this
 
 ```
 bsc-emo/cross-lingual/finetune-mbert-cls/outputs/
