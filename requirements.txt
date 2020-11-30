@@ -7,3 +7,5 @@ torch
 googletrans
 gensim
 nltk
+scikit-multilearn
+scikit-learn
