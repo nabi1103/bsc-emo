@@ -13,7 +13,7 @@ In this repository, we provide the following codes:
 
 # Install requirements
 
-Python 3.6.0 or higher is recommended.
+The code is tested with Python 3.6
 
 ``` 
 pip install - r requirements.txt
@@ -56,6 +56,12 @@ or
 
 ```
 pip install base-model/bilstm/requirements.txt
+```
+
+If there is an error with Tensorflow, downgrade it to 1.5.0 should help
+
+```
+pip install tensorflow==1.5.0
 ```
 
 Change the working directory
@@ -117,11 +123,11 @@ After the training has completed, the resulting model can be found in `outputs` 
 
 ```
 bsc-emo/transfer-learning/poetry-finetuning/outputs/
-                                            |--------pytorch_model.bin
-                                            |--------config.json
-                                            |--------vocab.txt
-                                            |--------training_args.bin
-                                            |--------.....
+                                                    |--------pytorch_model.bin
+                                                    |--------config.json
+                                                    |--------vocab.txt
+                                                    |--------training_args.bin
+                                                    |--------.....
 
 ```
 After first part is completed, comment out the first part (line 24 to 37), uncomment the second part (line 41 to 83) in `poetry_finetuning.py` and run the code again
@@ -154,11 +160,11 @@ After the training has completed, the resulting model can be found in `outputs` 
 
 ```
 bsc-emo/transfer-learning/emotion-finetuning/outputs/
-                                            |--------pytorch_model.bin
-                                            |--------config.json
-                                            |--------vocab.txt
-                                            |--------training_args.bin
-                                            |--------.....
+                                                    |--------pytorch_model.bin
+                                                    |--------config.json
+                                                    |--------vocab.txt
+                                                    |--------training_args.bin
+                                                    |--------.....
 
 ```
 After the first part is completed, comment out the first part (line 24 to 61), uncomment the second part (65 to 83) in `emotion_finetuning.py` and run the code again
@@ -191,11 +197,11 @@ After the training has completed, the resulting model can be found in `outputs` 
 
 ```
 bsc-emo/transfer-learning/meter-finetuning/outputs/
-                                            |--------pytorch_model.bin
-                                            |--------config.json
-                                            |--------vocab.txt
-                                            |--------training_args.bin
-                                            |--------.....
+                                                    |--------pytorch_model.bin
+                                                    |--------config.json
+                                                    |--------vocab.txt
+                                                    |--------training_args.bin
+                                                    |--------.....
 
 ```
 After the first part is completed, comment out the first part (line 25 to 64), uncomment the second part (line 68 to 97) in `meter_finetuning.py` and run the code again
@@ -349,11 +355,11 @@ After the training has completed, the resulting model can be found in `outputs` 
 
 ```
 bsc-emo/cross-lingual/finetune-mbert-cls/outputs/
-                                            |--------pytorch_model.bin
-                                            |--------config.json
-                                            |--------vocab.txt
-                                            |--------training_args.bin
-                                            |--------.....
+                                                |--------pytorch_model.bin
+                                                |--------config.json
+                                                |--------vocab.txt
+                                                |--------training_args.bin
+                                                |--------.....
 
 ```
 After the first part is completed, comment out the first part (line 25 to 63), uncomment the second part (line 67 to 92) in `finetune_mbert_cls.py` and run the code again
