@@ -21,7 +21,7 @@ pip install - r requirements.txt
 
 Setup virtual environment (optional) and install requirements:
 ``` 
-virtualenv --system-site-packages -p python.6 venv
+virtualenv --system-site-packages -p python3.6 venv
 source venv/bin/activate
 venv/bin/pip3 install -r requirements.txt
 ```
