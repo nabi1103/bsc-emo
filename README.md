@@ -41,9 +41,11 @@ bsc-emo/test-model/model/
                     |--------vocab.txt
                     |--------training_args.bin
                     |--------.....
+					
+````
 
 2, Choose the appropiate test set by editing the `test_model.py` script. Model marked with suffix `01` indicates it was trained with data from `split_0` and should be tested with `split_1` and vice versa.
-````
+
 
 3, Run the script
 
