@@ -137,7 +137,7 @@ bm = BERTMultilabel()
 base_model_path = 'bert-large-uncased'
 
 # Train 01 model
-train = split_0_ovs
+train = split_0_replaced
 test = split_1
 
 model = bm.train_model(train, args, base_model_path, test)

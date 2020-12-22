@@ -13,7 +13,7 @@ In this repository, we provide the following codes:
 
 # Install requirements
 
-The code is tested with Python 3.6
+The code is tested with Python 3.6. All models are trained on [Google Colab](https://colab.research.google.com/) with provided GPUs
 
 ``` 
 pip install - r requirements.txt
@@ -32,8 +32,9 @@ venv/bin/pip3 install -r requirements.txt
 
 In case trained models are to be tested, please do the following:
 
-1, Download the model from the link above and extract its content into `test-model\model`. The `model` folder should look like this after extraction
+1, Download the model from the link above and extract its content into `test-model/model`. The `model` folder should look like this after extraction
 
+```
 bsc-emo/test-model/model/
                     |--------pytorch_model.bin
                     |--------config.json
@@ -42,6 +43,7 @@ bsc-emo/test-model/model/
                     |--------.....
 
 2, Choose the appropiate test set by editing the `test_model.py` script. Model marked with suffix `01` indicates it was trained with data from `split_0` and should be tested with `split_1` and vice versa.
+````
 
 3, Run the script
 
@@ -72,9 +74,12 @@ This implementation is based on https://github.com/UKPLab/emnlp2017-bilstm-cnn-c
 
 Install additional requirements. It is recommended to setup a different venv to run this experiment separately from other experiments due to conflicting requirements.
 
+```
 virtualenv --system-site-packages -p python3.6 venv_new
 source venv_new/bin/activate
 venv_new/bin/pip3 install -r base-model/bilstm/requirements.txt
+```
+
 or 
 
 ```
@@ -101,7 +106,7 @@ python train_emo.py
 
 ### BERT-based implementation
 
-This implementation is based on https://github.com/ThilinaRajapakse/simpletransformers
+BERT implementations are based on https://github.com/ThilinaRajapakse/simpletransformers
 
 Change the working directory
 
@@ -289,7 +294,7 @@ python stanza_shuffling.py
 
 This was used in the Words Replacement experiment (Section 5.2.3)
 
-**NOTE** Running the word replacing functions require large amount of memory available (>12GB of RAM).
+**NOTE** Running the word replacing functions requires large amount of memory available (>12GB of RAM).
 
 Change the working directory
 
@@ -395,7 +400,7 @@ After the first part is completed, comment out the first part (line 25 to 63), u
 python finetune_mbert_cls.py
 ```
 
-## Ensemble
+### Ensemble
 
 Change the working directory
 
@@ -413,14 +418,14 @@ python ensemble.py
 
 should provide identical results to the ones reported in the thesis.
 
-In case there's an error with matplotlib, reinstalling Pillow might have
+In case there's an error with matplotlib, reinstalling Pillow might help
 
 ```
 pip install --upgrade --force-reinstall pillow
 ```
 
 
-## LIME
+### LIME
 
 Change the working directory
 

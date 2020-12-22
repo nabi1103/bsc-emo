@@ -106,15 +106,15 @@ class VAD:
 
         return f1_macro, f1_all
 
-## Training code
-# vad = VAD()
+# Training code
+vad = VAD()
 
-# train = split_0
-# test = split_1
+train = split_0
+test = split_1
 
-# model = vad.train_model(train)
+model = vad.train_model(train)
 
-# test_data = [vad.get_value(s, False) for s in test]
-# X_test = np.array([s[0] for s in test_data])
+test_data = [vad.get_value(s, False) for s in test]
+X_test = np.array([s[0] for s in test_data])
 
-# print(vad.test_model(model, split_1))
+print(vad.test_model(model, split_1))
