@@ -184,7 +184,7 @@ def merge_dict(d1: dict, d2: dict):
 class_names = ['suspense', 'awe/sublime', 'sadness', 'annoyance', 'uneasiness', 'beauty/joy', 'vitality', 'humor']
 
 ## MAKING LIME EXPLANATIONS
-# model_path =  # Add model path here for LIME explanation
+# model_path = curr_path + "/model"
 
 # model = MultiLabelClassificationModel(
 #     'bert',

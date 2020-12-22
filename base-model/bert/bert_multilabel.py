@@ -17,8 +17,6 @@ sys.path.append(prep_path)
 
 split_path = os.path.join(root_path, 'dataset/split')
 
-result_path = os.path.join(root_path, 'result/base-model/')
-
 curr_path = os.path.dirname(os.path.abspath(__file__))
 
 from reader import Reader

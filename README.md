@@ -28,6 +28,29 @@ venv/bin/pip3 install -r requirements.txt
 
 # Running the codes
 
+## Test model
+
+In case trained models are to be tested, please do the following:
+
+1, Download the model from the link above and extract its content into `test-model\model`. The `model` folder should look like this after extraction
+
+bsc-emo/test-model/model/
+                    |--------pytorch_model.bin
+                    |--------config.json
+                    |--------vocab.txt
+                    |--------training_args.bin
+                    |--------.....
+
+2, Choose the appropiate test set by editing the `test_model.py` script. Model marked with suffix `01` indicates it was trained with data from `split_0` and should be tested with `split_1` and vice versa.
+
+3, Run the script
+
+```
+python test_model.py
+```
+
+The f1_macro score and label-wise f1 score should be shown in console now.
+
 ## Training Baseline Models
 
 ### VAD-lexicon based model
@@ -49,9 +72,9 @@ This implementation is based on https://github.com/UKPLab/emnlp2017-bilstm-cnn-c
 
 Install additional requirements. It is recommended to setup a different venv to run this experiment separately from other experiments due to conflicting requirements.
 
-```
-venv/bin/pip3 install -r base-model/bilstm/requirements.txt
-```
+virtualenv --system-site-packages -p python3.6 venv_new
+source venv_new/bin/activate
+venv_new/bin/pip3 install -r base-model/bilstm/requirements.txt
 or 
 
 ```
@@ -123,14 +146,14 @@ After the training has completed, the resulting model can be found in `outputs` 
 
 ```
 bsc-emo/transfer-learning/poetry-finetuning/outputs/
-                                                    |--------pytorch_model.bin
-                                                    |--------config.json
-                                                    |--------vocab.txt
-                                                    |--------training_args.bin
-                                                    |--------.....
+                                                |--------pytorch_model.bin
+                                                |--------config.json
+                                                |--------vocab.txt
+                                                |--------training_args.bin
+                                                |--------.....
 
 ```
-After first part is completed, comment out the first part (line 24 to 37), uncomment the second part (line 41 to 83) in `poetry_finetuning.py` and run the code again
+After first part is completed, comment out the first part (line 24 to 37), uncomment the second part (line 41 to 83) in `poetry_finetuning.py` and run the code again to train the classification models.
 
 ```
 python poetry_finetuning.py
@@ -160,14 +183,14 @@ After the training has completed, the resulting model can be found in `outputs` 
 
 ```
 bsc-emo/transfer-learning/emotion-finetuning/outputs/
-                                                    |--------pytorch_model.bin
-                                                    |--------config.json
-                                                    |--------vocab.txt
-                                                    |--------training_args.bin
-                                                    |--------.....
+                                                |--------pytorch_model.bin
+                                                |--------config.json
+                                                |--------vocab.txt
+                                                |--------training_args.bin
+                                                |--------.....
 
 ```
-After the first part is completed, comment out the first part (line 24 to 61), uncomment the second part (65 to 83) in `emotion_finetuning.py` and run the code again
+After the first part is completed, comment out the first part (line 24 to 61), uncomment the second part (65 to 83) in `emotion_finetuning.py` and run the code again to train the classification models.
 
 ```
 python emotion_finetuning.py
@@ -197,14 +220,14 @@ After the training has completed, the resulting model can be found in `outputs` 
 
 ```
 bsc-emo/transfer-learning/meter-finetuning/outputs/
-                                                    |--------pytorch_model.bin
-                                                    |--------config.json
-                                                    |--------vocab.txt
-                                                    |--------training_args.bin
-                                                    |--------.....
+                                                |--------pytorch_model.bin
+                                                |--------config.json
+                                                |--------vocab.txt
+                                                |--------training_args.bin
+                                                |--------.....
 
 ```
-After the first part is completed, comment out the first part (line 25 to 64), uncomment the second part (line 68 to 97) in `meter_finetuning.py` and run the code again
+After the first part is completed, comment out the first part (line 25 to 64), uncomment the second part (line 68 to 97) in `meter_finetuning.py` and run the code again to train the classification models.
 
 ```
 python meter_finetuning.py
@@ -266,7 +289,7 @@ python stanza_shuffling.py
 
 This was used in the Words Replacement experiment (Section 5.2.3)
 
-**NOTE** Running the word replacing functions require large amount of memory available (>10GB).
+**NOTE** Running the word replacing functions require large amount of memory available (>12GB of RAM).
 
 Change the working directory
 
@@ -322,14 +345,14 @@ After the training has completed, the resulting model can be found in `outputs` 
 
 ```
 bsc-emo/cross-lingual/finetune-mbert/outputs/
-                                            |--------pytorch_model.bin
-                                            |--------config.json
-                                            |--------vocab.txt
-                                            |--------training_args.bin
-                                            |--------.....
+                                        |--------pytorch_model.bin
+                                        |--------config.json
+                                        |--------vocab.txt
+                                        |--------training_args.bin
+                                        |--------.....
 
 ```
-After the first part is completed, comment out the first part (line 25 to 38), uncomment the second part (line 42 to 88) in `finetune_mbert.py` and run the code again
+After the first part is completed, comment out the first part (line 25 to 38), uncomment the second part (line 42 to 88) in `finetune_mbert.py` and run the code again to train the classification models.
 
 ```
 python finetune_mbert.py
@@ -359,14 +382,14 @@ After the training has completed, the resulting model can be found in `outputs` 
 
 ```
 bsc-emo/cross-lingual/finetune-mbert-cls/outputs/
-                                                |--------pytorch_model.bin
-                                                |--------config.json
-                                                |--------vocab.txt
-                                                |--------training_args.bin
-                                                |--------.....
+                                            |--------pytorch_model.bin
+                                            |--------config.json
+                                            |--------vocab.txt
+                                            |--------training_args.bin
+                                            |--------.....
 
 ```
-After the first part is completed, comment out the first part (line 25 to 63), uncomment the second part (line 67 to 92) in `finetune_mbert_cls.py` and run the code again
+After the first part is completed, comment out the first part (line 25 to 63), uncomment the second part (line 67 to 92) in `finetune_mbert_cls.py` and run the code again to train the classification models.
 
 ```
 python finetune_mbert_cls.py
