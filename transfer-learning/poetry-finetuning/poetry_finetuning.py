@@ -32,7 +32,7 @@ finetune_args = {
     'train_batch_size' : 16,
 }
 
-model = LanguageModelingModel('bert', 'bert-large-uncased', args = finetune_args, use_cuda = False)
+model = LanguageModelingModel('bert', 'bert-large-uncased', args = finetune_args, use_cuda = False) # Highly recommended to set use_cuda = True to ultilize GPU (if available) for training
 
 model.train_model(curr_path + "/raw-poetry-train.txt", eval_file = curr_path + '/raw-poetry-test.txt')
 
@@ -82,4 +82,4 @@ model.train_model(curr_path + "/raw-poetry-train.txt", eval_file = curr_path + '
 
 # finetuned_model_path =  curr_path + '/outputs/'
 
-# model = bm.train_model(training_data = train, training_args = args, base_model_path = finetuned_model_path, eval_data = test)
+# model = bm.train_model(training_data = train, training_args = args, base_model_path = finetuned_model_path, test_data = test)

@@ -48,7 +48,7 @@ class BERTMultilabel:
             "bert",
             base_model_path,
             num_labels=8,
-            use_cuda = False, # Change to True if CUDA is available (recommended)
+            use_cuda = False, # Highly recommended to set use_cuda = True to ultilize GPU (if available) for training
             args = training_args,
         )
 

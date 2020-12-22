@@ -101,9 +101,9 @@ class WordReplacer():
             tsv_writer = csv.writer(out_file, delimiter='\t')
             tsv_writer.writerows(data)
 
-# wr = WordReplacer(split_path + '/split_0.tsv', model).generate_data()
+# wr = WordReplacer(split_path + '/split_0.tsv', model)
 
-# save_path = curr_path + 'split_0_replaced.tsv'
+# save_path = curr_path + '/test.tsv'
 # wr.save_data(save_path)
 
 # Train classification models

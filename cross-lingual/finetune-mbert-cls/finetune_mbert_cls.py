@@ -91,4 +91,4 @@ model = bm.train_model(training_data = train, training_args = args, base_model_p
 
 # finetuned_model_path = curr_path + '/outputs/'
 
-# model = bm.train_model(training_data = train, training_args = args, base_model_path = finetuned_model_path, eval_data = test)
+# model = bm.train_model(training_data = train, training_args = args, base_model_path = finetuned_model_path, test_data = test)

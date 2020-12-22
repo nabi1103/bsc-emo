@@ -53,7 +53,7 @@ model = MultiLabelClassificationModel(
         'evaluate_during_training' : False, 
         'save_model_every_epoch' : True, 
         'train_batch_size' : 32},
-      use_cuda = False
+      use_cuda = False # Highly recommended to set use_cuda = True to ultilize GPU (if available) for training
     )
 
 temp = [r.assign_label_tales(s) for s in train_tales]
@@ -91,4 +91,4 @@ model.train_model(pd.DataFrame(temp, columns=['text', 'labels']))
 
 # finetuned_model_path = curr_path + '/outputs/'
 
-# model = bm.train_model(training_data = train, training_args = args, base_model_path = finetuned_model_path, eval_data = test)
+# model = bm.train_model(training_data = train, training_args = args, base_model_path = finetuned_model_path, test_data = test)

@@ -21,7 +21,7 @@ pip install - r requirements.txt
 
 Setup virtual environment (optional) and install requirements:
 ``` 
-virtualenv --system-site-packages -p python3 venv
+virtualenv --system-site-packages -p python.6 venv
 source venv/bin/activate
 venv/bin/pip3 install -r requirements.txt
 ```
@@ -40,14 +40,14 @@ cd base-model/lexicon
 
 To train the model, look into `vad.py` and uncomment the codes from line 109 to line 120. Run the code with
 ```
-python3 vad.py
+python vad.py
 ```
 
 ### BiLSTM-CNN-CRF model 
 
 This implementation is based on https://github.com/UKPLab/emnlp2017-bilstm-cnn-crf
 
-Install additional requirements
+Install additional requirements. It is recommended to setup a different venv to run this experiment separately from other experiments due to conflicting requirements.
 
 ```
 venv/bin/pip3 install -r base-model/bilstm/requirements.txt
@@ -73,7 +73,7 @@ cd base-model/bilstm
 Train the model
 
 ```
-python3 train_emo.py
+python train_emo.py
 ```
 
 ### BERT-based implementation
@@ -92,7 +92,7 @@ In order to run the training code, a base model of BERT-large (about 1.34 GB in 
 
 Train model.
 ```
-python3 bert_multilabel.py
+python bert_multilabel.py
 ```
 
 After training, make sure to comment out the code from line 91 to 120 again since we import this class again to train models in other experiments.
@@ -116,7 +116,7 @@ The training code for this experiment has two parts, which need to be executed i
 The first part can be executed by running the code
 
 ```
-python3 poetry_finetuning.py
+python poetry_finetuning.py
 ```
 
 After the training has completed, the resulting model can be found in `outputs` under the same working directory. To ensure reproducibility, we provide our poetry fine-tuned model, which should be downloaded [here](https://drive.google.com/drive/folders/1-fmFdqen7tH-mYWIN2prUNURihEAd_Te?usp=sharing) and extracted to the `outputs` folder. If done correctly, the folder structure should look like this
@@ -133,7 +133,7 @@ bsc-emo/transfer-learning/poetry-finetuning/outputs/
 After first part is completed, comment out the first part (line 24 to 37), uncomment the second part (line 41 to 83) in `poetry_finetuning.py` and run the code again
 
 ```
-python3 poetry_finetuning.py
+python poetry_finetuning.py
 ```
 
 ### Emotion fine-tuning
@@ -153,7 +153,7 @@ The training code for this experiment has two parts, which need to be executed i
 The first part can be executed by running the code
 
 ```
-python3 emotion_finetuning.py
+python emotion_finetuning.py
 ```
 
 After the training has completed, the resulting model can be found in `outputs` under the same working directory. To ensure reproducibility, we provide our emotion fine-tuned model, which should be downloaded [here](https://drive.google.com/drive/folders/1-FzjoLAsmLWPVgpW6ri27FW3huM_bqnO?usp=sharing) and extracted to the `outputs` folder. If done correctly, the folder structure should look like this
@@ -170,7 +170,7 @@ bsc-emo/transfer-learning/emotion-finetuning/outputs/
 After the first part is completed, comment out the first part (line 24 to 61), uncomment the second part (65 to 83) in `emotion_finetuning.py` and run the code again
 
 ```
-python3 emotion_finetuning.py
+python emotion_finetuning.py
 ```
 
 ### Meter fine-tuning
@@ -207,7 +207,7 @@ bsc-emo/transfer-learning/meter-finetuning/outputs/
 After the first part is completed, comment out the first part (line 25 to 64), uncomment the second part (line 68 to 97) in `meter_finetuning.py` and run the code again
 
 ```
-python3 meter_finetuning.py
+python meter_finetuning.py
 ```
 
 ## Data Augmentation Experiments
@@ -215,6 +215,8 @@ python3 meter_finetuning.py
 ### Back-translation
 
 This was used in the Back-translation experiment (Section 5.2.2)
+
+**IMPORTANT** The Translation API is currently having some problem (https://github.com/ssut/py-googletrans/issues/264). However, the back-translated text using an older version of this API is still available for training in the working directory.
 
 Change the working directory
 
@@ -235,13 +237,13 @@ This was used in the Oversampling experiment (Section 5.2.1)
 Change the working directory
 
 ```
-cd data-augmentation/oversample
+cd data-augmentation/oversampling
 ```
 
 The augmented data is already available in the folder. Train the model by running
 
 ```
-python3 oversample.py
+python oversample.py
 ```
 
 ### Stanza Shuffling
@@ -264,6 +266,8 @@ python stanza_shuffling.py
 
 This was used in the Words Replacement experiment (Section 5.2.3)
 
+**NOTE** Running the word replacing functions require large amount of memory available (>10GB).
+
 Change the working directory
 
 ```
@@ -273,7 +277,7 @@ cd data-augmentation/word-replacing
 The augmented data is already available in the folder. Train the model by running
 
 ```
-python3 word_replacing.py
+python word_replacing.py
 ```
 
 ## Cross-lingual Experiments
@@ -291,7 +295,7 @@ cd cross-lingual/baseline-mbert
 Train the model
 
 ```
-python3 baseline_mbert.py
+python baseline_mbert.py
 ```
 
 ### Fine-tune m-BERT with German poetry
@@ -311,7 +315,7 @@ The training code for this experiment has two parts, which need to be executed i
 The first part can be executed by running the code
 
 ```
-python3 finetune_mbert.py
+python finetune_mbert.py
 ```
 
 After the training has completed, the resulting model can be found in `outputs` under the same working directory. To ensure reproducibility, we provide our German fine-tuned model, which should be downloaded [here](https://drive.google.com/drive/folders/103HdxRb7LH-tHv27w4EpvlFvO6sxeIZd?usp=sharing) and extracted to the `outputs` folder. If done correctly, the folder structure should look like this
@@ -328,7 +332,7 @@ bsc-emo/cross-lingual/finetune-mbert/outputs/
 After the first part is completed, comment out the first part (line 25 to 38), uncomment the second part (line 42 to 88) in `finetune_mbert.py` and run the code again
 
 ```
-python3 finetune_mbert.py
+python finetune_mbert.py
 ```
 
 ### Intermediate task training with German poetry emotion classification
@@ -348,7 +352,7 @@ The training code for this experiment has two parts, which need to be executed i
 The first part can be executed by running the code
 
 ```
-python3 finetune_mbert_cls.py
+python finetune_mbert_cls.py
 ```
 
 After the training has completed, the resulting model can be found in `outputs` under the same working directory. To ensure reproducibility, we provide our German poetry emotion classification fine-tuned model, which should be downloaded [here](https://drive.google.com/drive/folders/1fho1TGenK946yJjPppBtTwDtIt8FYA9h?usp=sharing) and extracted to the `outputs` folder. If done correctly, the folder structure should look like this
@@ -365,7 +369,7 @@ bsc-emo/cross-lingual/finetune-mbert-cls/outputs/
 After the first part is completed, comment out the first part (line 25 to 63), uncomment the second part (line 67 to 92) in `finetune_mbert_cls.py` and run the code again
 
 ```
-python3 finetune_mbert_cls.py
+python finetune_mbert_cls.py
 ```
 
 ## Ensemble
@@ -381,10 +385,16 @@ We provide the binary predictions and the raw output probabilities from all of t
 The code to run the ensembles is commented out in `ensemble.py`. Simply uncomment them and run again with
 
 ```
-python3 ensemble.py
+python ensemble.py
 ```
 
 should provide identical results to the ones reported in the thesis.
+
+In case there's an error with matplotlib, reinstalling Pillow might have
+
+```
+pip install --upgrade --force-reinstall pillow
+```
 
 
 ## LIME
@@ -398,5 +408,5 @@ cd analysis
 Since LIME needs all the trained classification models to make explanations, we provide all the LIME explanations from our models in `json` folder for quick assessment. Running the code will visualize these explanations. 
 
 ```
-python3 lime.py
+python lime_analysis.py
 ```
