@@ -1,7 +1,7 @@
 simpletransformers==0.33.1
 transformers==3.1.0
 lime==0.2.0.1
-numpy==1.19.4
+numpy==1.22.0
 pandas==1.1.4
 torch
 googletrans
